@@ -2,6 +2,8 @@
 const nextConfig = {
   output: 'export',
   distDir: 'dist',
+  basePath: '/gj-revisjon-website',
+  assetPrefix: '/gj-revisjon-website',
   images: {
     unoptimized: true,
   },
