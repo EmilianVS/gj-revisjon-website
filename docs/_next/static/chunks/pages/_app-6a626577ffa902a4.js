@@ -1,0 +1,1 @@
+(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[636],{284:function(n,e,t){"use strict";t.r(e),t.d(e,{default:function(){return u}});var r=t(231);function u(n){let{Component:e,pageProps:t}=n;return(0,r.jsx)(e,{...t})}},function(n){n.O(0,[744],function(){return n(n.s=284)}),_N_E=n.O()}]);
