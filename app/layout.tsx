@@ -37,7 +37,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="apple-touch-icon" href="/logo.png" />
-        <meta name="theme-color" content="#102a43" />
+        <meta name="theme-color" content="#0a0e1a" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
