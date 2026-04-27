@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 
 export default function Personvern() {
   return (
-    <main className="min-h-screen bg-[#080c14] text-slate-400">
-      <header className="bg-[#0a0e18] border-b border-slate-800/50 py-10">
+    <main className="min-h-screen bg-[#080c14] text-slate-400 antialiased">
+      <header className="bg-[#0a0e18] border-b border-slate-800/30 py-12">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
           <Link
             href="/"
@@ -32,7 +32,7 @@ export default function Personvern() {
           Denne personvernerklæringen forteller hvordan Gyllstrøm & Johansen AS samler inn og bruker personopplysninger. Målet er å gi deg overordnet informasjon om vår behandling av personopplysninger.
         </p>
 
-        <div className="bg-slate-900/30 border border-slate-800/50 p-8 mb-12">
+        <div className="bg-slate-900/30 border border-slate-800/40 rounded-3xl p-8 md:p-10 mb-12">
           <h3 className="font-serif text-lg text-slate-200 mb-4">Kontakt oss om personvern</h3>
           <p className="text-slate-500 text-sm mb-6">
             Henvendelse om vår behandling av personopplysninger kan rettes til vår personvernansvarlig:
@@ -96,7 +96,7 @@ export default function Personvern() {
         ))}
       </div>
 
-      <footer className="bg-[#080c14] border-t border-slate-800/50 py-8">
+      <footer className="bg-[#080c14] border-t border-slate-800/30 py-8">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-slate-700 text-xs tracking-wide">
             © {new Date().getFullYear()} Gyllstrøm & Johansen AS
