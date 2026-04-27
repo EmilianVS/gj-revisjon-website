@@ -9,103 +9,173 @@ export const metadata: Metadata = {
 
 export default function Personvern() {
   return (
-    <main className="min-h-screen bg-[#080c14] text-slate-400 antialiased">
-      <header className="bg-[#0a0e18] border-b border-slate-800/30 py-12">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+    <div style={{ background: '#060a14', minHeight: '100vh' }}>
+      {/* Floating orb — subtle */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="orb orb-gold animate-float" style={{ width: '400px', height: '400px', top: '-5%', right: '-5%', opacity: 0.5 }} />
+      </div>
+
+      {/* Header */}
+      <header className="relative z-10" style={{ borderBottom: '1px solid rgba(196, 165, 116, 0.06)' }}>
+        <div className="max-w-[900px] mx-auto px-8 lg:px-16" style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
           <Link
             href="/"
-            className="inline-flex items-center gap-2 text-slate-500 hover:text-[#c9a96e] transition-colors mb-8 text-sm"
+            className="link-hover inline-flex items-center gap-3 mb-12"
+            style={{ fontSize: '0.6875rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}
           >
-            <ArrowLeft className="w-4 h-4" />
+            <ArrowLeft size={14} />
             Tilbake til forsiden
           </Link>
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-8 h-px bg-[#c9a96e]" />
-            <span className="text-[10px] uppercase tracking-[0.3em] text-[#c9a96e]">Personvern</span>
+
+          <div className="flex items-center gap-6 mb-6">
+            <div className="rule-left" style={{ width: '40px' }} />
+            <span className="label-tiny">Personvern</span>
           </div>
-          <h1 className="font-serif text-3xl sm:text-4xl text-slate-100">Personvernerklæring</h1>
+
+          <h1
+            className="font-display"
+            style={{
+              fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+              fontWeight: 300,
+              lineHeight: 1.1,
+              color: '#e8e4dc',
+              letterSpacing: '-0.02em',
+            }}
+          >
+            Personvernerklæring
+          </h1>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-6 lg:px-8 py-16">
-        <p className="text-slate-500 mb-10 leading-relaxed">
-          Denne personvernerklæringen forteller hvordan Gyllstrøm & Johansen AS samler inn og bruker personopplysninger. Målet er å gi deg overordnet informasjon om vår behandling av personopplysninger.
-        </p>
-
-        <div className="bg-slate-900/30 border border-slate-800/40 rounded-3xl p-8 md:p-10 mb-12">
-          <h3 className="font-serif text-lg text-slate-200 mb-4">Kontakt oss om personvern</h3>
-          <p className="text-slate-500 text-sm mb-6">
-            Henvendelse om vår behandling av personopplysninger kan rettes til vår personvernansvarlig:
+      {/* Body */}
+      <main className="relative z-10" style={{ padding: '6rem 0' }}>
+        <div className="max-w-[900px] mx-auto px-8 lg:px-16">
+          <p className="body-elegant" style={{ color: '#6b7280', marginBottom: '4rem', maxWidth: '640px' }}>
+            Denne personvernerklæringen forteller hvordan Gyllstrøm & Johansen AS samler inn og bruker personopplysninger.
+            Målet er å gi deg overordnet informasjon om vår behandling av personopplysninger.
           </p>
-          <div className="space-y-3 text-sm">
-            <p className="text-slate-300 font-medium">Gyllstrøm & Johansen AS</p>
-            <p className="flex items-center gap-2 text-slate-500">
-              <MapPin className="w-4 h-4 text-[#c9a96e]" />
-              Muusøya 1, 3023 Drammen
+
+          {/* Contact card */}
+          <div
+            style={{
+              background: 'rgba(12, 18, 32, 0.6)',
+              border: '1px solid rgba(196, 165, 116, 0.06)',
+              borderRadius: '24px',
+              padding: '2.5rem',
+              marginBottom: '4rem',
+            }}
+          >
+            <h2
+              className="font-display"
+              style={{ fontSize: '1.25rem', fontWeight: 400, color: '#e8e4dc', marginBottom: '1rem' }}
+            >
+              Kontakt oss om personvern
+            </h2>
+            <p className="body-elegant" style={{ color: '#6b7280', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
+              Henvendelse om vår behandling av personopplysninger kan rettes til vår personvernansvarlig:
             </p>
-            <p className="flex items-center gap-2 text-slate-500">
-              <Mail className="w-4 h-4 text-[#c9a96e]" />
-              <a href="mailto:rune@gjrevisjon.no" className="hover:text-[#c9a96e] transition-colors">rune@gjrevisjon.no</a>
+            <div className="space-y-3" style={{ fontSize: '0.875rem' }}>
+              <p style={{ color: '#9ca3af', fontWeight: 300 }}>Gyllstrøm & Johansen AS</p>
+              <p className="flex items-center gap-3" style={{ color: '#6b7280' }}>
+                <MapPin size={14} style={{ color: '#c4a574', flexShrink: 0 }} />
+                Muusøya 1, 3023 Drammen
+              </p>
+              <p className="flex items-center gap-3" style={{ color: '#6b7280' }}>
+                <Mail size={14} style={{ color: '#c4a574', flexShrink: 0 }} />
+                <a href="mailto:rune@gjrevisjon.no" className="link-hover">rune@gjrevisjon.no</a>
+              </p>
+            </div>
+            <p style={{ fontSize: '0.625rem', color: 'rgba(107, 114, 128, 0.4)', marginTop: '1.5rem', letterSpacing: '0.1em' }}>
+              Dato for siste endring: 16. oktober 2018
             </p>
           </div>
-          <p className="text-slate-700 text-xs mt-6">
-            Dato for siste endring: 16. oktober 2018
-          </p>
-        </div>
 
-        {[
-          {
-            title: '1. Lovgivning og bransjenormer',
-            content: 'Gyllstrøm & Johansen AS har offentlig godkjenning fra Finanstilsynet etter revisorloven. Finanstilsynet fører tilsyn med at vi driver virksomheten vår i samsvar med lovgivningen vi er underlagt.\n\nDet er utarbeidet en bransjenorm for behandling av personopplysninger i revisjonsbransjen. Vi følger disse bransjenormene i vår virksomhet.'
-          },
-          {
-            title: '2. Når samler vi inn personopplysninger?',
-            content: 'Vi samler inn personopplysninger i forbindelse med:\n\n• Utførelse av våre oppdrag, inkludert revisjonstjenester\n• Kundekontroll og rapportering av mistanke etter hvitvaskingsloven\n• Kundekontakt og markedsføring\n• Ansettelser og ansatte'
-          },
-          {
-            title: '3. Behandlingsansvarlig og databehandler',
-            content: 'Vi er behandlingsansvarlig etter personvernreglene når vi behandler personopplysninger i forbindelse med revisjonstjenester, utarbeidelse av årsregnskap og skattemelding for egne revisjonsklienter og attestasjonstjenester.\n\nI enkelte tilfeller er vi databehandler for vår kunde. Det vil si at vi behandler dine personopplysninger på vegne av vår oppdragsgiver (behandlingsansvarlig).'
-          },
-          {
-            title: '4. Dine rettigheter',
-            content: 'Du kan utøve dine rettigheter ved å kontakte vår personvernansvarlig. Send en e-post til rune@gjrevisjon.no. Du skal få svar uten ugrunnet opphold, og senest innen 30 dager.\n\nDu har rett til innsyn, sletting, retting og klage etter personvernreglene.'
-          },
-          {
-            title: '5. Personopplysninger vi samler inn',
-            content: 'Revisjonsdokumentasjonen inneholder personopplysninger som navn og stillingsbetegnelse på personer vi har innhentet opplysninger fra, opplysninger om lønns- og arbeidsforhold til ansatte hos selskapet vi reviderer, og vurderinger av kompetansen og integriteten til personer som har ansvar for regnskapet.\n\nGjennom hvitvaskingsloven er vi pålagt å utføre kundekontroll av alle våre kunder.'
-          },
-          {
-            title: '6. Informasjonssikkerhet og oppbevaring',
-            content: 'Vi har rutiner for å sikre konfidensialitet og integritet i våre kunders data. Sikringsmekanismene inkluderer rolle- og tilgangsstyring og krav til innebygd personvern i våre IT-systemer.\n\nVi er underlagt taushetsplikt etter revisorloven om alt vi blir kjent med i vår virksomhet. Etter revisorloven skal vi oppbevare dokumentasjonen vår på en ordnet og betryggende måte i minst ti år.'
-          },
-          {
-            title: '7. Overføring av personopplysninger',
-            content: 'Vi oppbevarer våre kundedata, inkludert alle personopplysninger, i Norge eller andre EØS-land. Vi benytter kun databehandlere som oppbevarer opplysningene i Norge eller andre EØS-land.'
-          },
-          {
-            title: '8. Vår bruk av databehandlere',
-            content: 'Vi bruker tjenesteleverandører til å drifte våre informasjonssystemer og lagre data for oss. Vi har databehandleravtaler med alle tjenesteleverandører som behandler personopplysninger på vegne av oss.'
-          },
-        ].map((section, i) => (
-          <div key={i} className="mb-10">
-            <h2 className="font-serif text-xl text-slate-200 mb-4">{section.title}</h2>
-            <div className="text-slate-500 text-sm leading-relaxed whitespace-pre-line">
-              {section.content}
+          {/* Sections */}
+          {[
+            {
+              title: '1. Lovgivning og bransjenormer',
+              content: 'Gyllstrøm & Johansen AS har offentlig godkjenning fra Finanstilsynet etter revisorloven. Finanstilsynet fører tilsyn med at vi driver virksomheten vår i samsvar med lovgivningen vi er underlagt.\n\nDet er utarbeidet en bransjenorm for behandling av personopplysninger i revisjonsbransjen. Vi følger disse bransjenormene i vår virksomhet.'
+            },
+            {
+              title: '2. Når samler vi inn personopplysninger?',
+              content: 'Vi samler inn personopplysninger i forbindelse med:\n\n• Utførelse av våre oppdrag, inkludert revisjonstjenester\n• Kundekontroll og rapportering av mistanke etter hvitvaskingsloven\n• Kundekontakt og markedsføring\n• Ansettelser og ansatte'
+            },
+            {
+              title: '3. Behandlingsansvarlig og databehandler',
+              content: 'Vi er behandlingsansvarlig etter personvernreglene når vi behandler personopplysninger i forbindelse med revisjonstjenester, utarbeidelse av årsregnskap og skattemelding for egne revisjonsklienter og attestasjonstjenester.\n\nI enkelte tilfeller er vi databehandler for vår kunde. Det vil si at vi behandler dine personopplysninger på vegne av vår oppdragsgiver (behandlingsansvarlig).'
+            },
+            {
+              title: '4. Dine rettigheter',
+              content: 'Du kan utøve dine rettigheter ved å kontakte vår personvernansvarlig. Send en e-post til rune@gjrevisjon.no. Du skal få svar uten ugrunnet opphold, og senest innen 30 dager.\n\nDu har rett til innsyn, sletting, retting og klage etter personvernreglene.'
+            },
+            {
+              title: '5. Personopplysninger vi samler inn',
+              content: 'Revisjonsdokumentasjonen inneholder personopplysninger som navn og stillingsbetegnelse på personer vi har innhentet opplysninger fra, opplysninger om lønns- og arbeidsforhold til ansatte hos selskapet vi reviderer, og vurderinger av kompetansen og integriteten til personer som har ansvar for regnskapet.\n\nGjennom hvitvaskingsloven er vi pålagt å utføre kundekontroll av alle våre kunder.'
+            },
+            {
+              title: '6. Informasjonssikkerhet og oppbevaring',
+              content: 'Vi har rutiner for å sikre konfidensialitet og integritet i våre kunders data. Sikringsmekanismene inkluderer rolle- og tilgangsstyring og krav til innebygd personvern i våre IT-systemer.\n\nVi er underlagt taushetsplikt etter revisorloven om alt vi blir kjent med i vår virksomhet. Etter revisorloven skal vi oppbevare dokumentasjonen vår på en ordnet og betryggende måte i minst ti år.'
+            },
+            {
+              title: '7. Overføring av personopplysninger',
+              content: 'Vi oppbevarer våre kundedata, inkludert alle personopplysninger, i Norge eller andre EØS-land. Vi benytter kun databehandlere som oppbevarer opplysningene i Norge eller andre EØS-land.'
+            },
+            {
+              title: '8. Vår bruk av databehandlere',
+              content: 'Vi bruker tjenesteleverandører til å drifte våre informasjonssystemer og lagre data for oss. Vi har databehandleravtaler med alle tjenesteleverandører som behandler personopplysninger på vegne av oss.'
+            },
+          ].map((section, i) => (
+            <div key={i} style={{ marginBottom: '3rem' }}>
+              <h2
+                className="font-display"
+                style={{
+                  fontSize: '1.25rem',
+                  fontWeight: 400,
+                  color: '#e8e4dc',
+                  marginBottom: '1rem',
+                  lineHeight: 1.3,
+                }}
+              >
+                {section.title}
+              </h2>
+              <div className="body-elegant" style={{ color: '#6b7280', fontSize: '0.875rem', whiteSpace: 'pre-line' }}>
+                {section.content}
+              </div>
+            </div>
+          ))}
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="relative z-10" style={{ padding: '3rem 0', borderTop: '1px solid rgba(196, 165, 116, 0.06)' }}>
+        <div className="max-w-[900px] mx-auto px-8 lg:px-16 flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex items-center gap-4">
+            <div
+              style={{
+                width: '32px',
+                height: '32px',
+                borderRadius: '50%',
+                border: '1px solid rgba(196, 165, 116, 0.15)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <span className="font-display text-sm" style={{ color: '#c4a574' }}>GJ</span>
+            </div>
+            <div>
+              <p style={{ fontSize: '0.75rem', color: '#9ca3af' }}>Gyllstrøm & Johansen AS</p>
+              <p style={{ fontSize: '0.625rem', color: 'rgba(107, 114, 128, 0.4)', letterSpacing: '0.1em' }}>Statsautoriserte Revisorer</p>
             </div>
           </div>
-        ))}
-      </div>
-
-      <footer className="bg-[#080c14] border-t border-slate-800/30 py-8">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-slate-700 text-xs tracking-wide">
-            © {new Date().getFullYear()} Gyllstrøm & Johansen AS
-          </p>
-          <Link href="/" className="text-slate-600 hover:text-[#c9a96e] transition-colors text-sm">
+          <Link href="/" className="link-hover" style={{ fontSize: '0.625rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
             Tilbake til forsiden
           </Link>
+          <p style={{ fontSize: '0.625rem', color: 'rgba(107, 114, 128, 0.3)', letterSpacing: '0.1em' }}>
+            © {new Date().getFullYear()}
+          </p>
         </div>
       </footer>
-    </main>
+    </div>
   )
 }
