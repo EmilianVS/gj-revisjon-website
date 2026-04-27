@@ -1,6 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { ArrowLeft, Mail, MapPin, Phone } from 'lucide-react'
+import { ArrowLeft, Mail, MapPin } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Personvernerklæring | Gyllstrøm & Johansen AS',
@@ -9,145 +9,99 @@ export const metadata: Metadata = {
 
 export default function Personvern() {
   return (
-    <main className="min-h-screen bg-white">
-      <header className="bg-primary-900 text-white py-8">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <Link 
-            href="/" 
-            className="inline-flex items-center gap-2 text-white/80 hover:text-accent-400 transition-colors mb-6"
+    <main className="min-h-screen bg-[#080c14] text-slate-400">
+      <header className="bg-[#0a0e18] border-b border-slate-800/50 py-10">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 text-slate-500 hover:text-[#c9a96e] transition-colors mb-8 text-sm"
           >
             <ArrowLeft className="w-4 h-4" />
             Tilbake til forsiden
           </Link>
-          <h1 className="font-serif text-3xl sm:text-4xl font-bold">Personvern</h1>
-          <p className="mt-2 text-primary-300">Vår personvernerklæring</p>
+          <div className="flex items-center gap-4 mb-4">
+            <div className="w-8 h-px bg-[#c9a96e]" />
+            <span className="text-[10px] uppercase tracking-[0.3em] text-[#c9a96e]">Personvern</span>
+          </div>
+          <h1 className="font-serif text-3xl sm:text-4xl text-slate-100">Personvernerklæring</h1>
         </div>
       </header>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="prose prose-primary max-w-none">
-          <p className="text-lg text-primary-600 mb-8 leading-relaxed">
-            Denne personvernerklæringen forteller hvordan Gyllstrøm & Johansen AS samler inn og bruker personopplysninger. Målet er å gi deg overordnet informasjon om vår behandling av personopplysninger.
-          </p>
+      <div className="max-w-4xl mx-auto px-6 lg:px-8 py-16">
+        <p className="text-slate-500 mb-10 leading-relaxed">
+          Denne personvernerklæringen forteller hvordan Gyllstrøm & Johansen AS samler inn og bruker personopplysninger. Målet er å gi deg overordnet informasjon om vår behandling av personopplysninger.
+        </p>
 
-          <p className="text-primary-600 mb-8">
-            Her får du nærmere informasjon om hvilke personopplysninger vi typisk samler inn, hva vi bruker opplysningene til og hvordan vi behandler dem. Du får også informasjon om hvilke rettigheter du har dersom vi har personopplysninger om deg.
+        <div className="bg-slate-900/30 border border-slate-800/50 p-8 mb-12">
+          <h3 className="font-serif text-lg text-slate-200 mb-4">Kontakt oss om personvern</h3>
+          <p className="text-slate-500 text-sm mb-6">
+            Henvendelse om vår behandling av personopplysninger kan rettes til vår personvernansvarlig:
           </p>
-
-          <div className="bg-primary-50 rounded-xl p-6 mb-10 border border-primary-100">
-            <h3 className="font-semibold text-primary-900 mb-3">Kontakt oss om personvern</h3>
-            <p className="text-primary-600 text-sm mb-4">
-              Henvendelse om vår behandling av personopplysninger kan rettes til vår personvernansvarlig:
+          <div className="space-y-3 text-sm">
+            <p className="text-slate-300 font-medium">Gyllstrøm & Johansen AS</p>
+            <p className="flex items-center gap-2 text-slate-500">
+              <MapPin className="w-4 h-4 text-[#c9a96e]" />
+              Muusøya 1, 3023 Drammen
             </p>
-            <div className="space-y-2 text-sm">
-              <p className="flex items-center gap-2 text-primary-700">
-                <span className="font-semibold">Gyllstrøm & Johansen AS</span>
-              </p>
-              <p className="flex items-center gap-2 text-primary-600">
-                <MapPin className="w-4 h-4" />
-                Muusøya 1, 3023 Drammen
-              </p>
-              <p className="flex items-center gap-2 text-primary-600">
-                <Mail className="w-4 h-4" />
-                <a href="mailto:rune@gjrevisjon.no" className="hover:text-accent-600 transition-colors">rune@gjrevisjon.no</a>
-              </p>
-            </div>
-            <p className="text-primary-500 text-xs mt-3">
-              Dato for siste endring: 16. oktober 2018
+            <p className="flex items-center gap-2 text-slate-500">
+              <Mail className="w-4 h-4 text-[#c9a96e]" />
+              <a href="mailto:rune@gjrevisjon.no" className="hover:text-[#c9a96e] transition-colors">rune@gjrevisjon.no</a>
             </p>
           </div>
-
-          <h2 className="font-serif text-2xl font-bold text-primary-900 mt-10 mb-4">1. Lovgivning og bransjenormer</h2>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Gyllstrøm & Johansen AS har offentlig godkjenning fra Finanstilsynet etter revisorloven. Finanstilsynet fører tilsyn med at vi driver virksomheten vår i samsvar med lovgivningen vi er underlagt.
-          </p>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Det er utarbeidet en bransjenorm for behandling av personopplysninger i revisjonsbransjen. Det er også utarbeidet en atferdsnorm for behandling av personopplysninger i regnskapsførerbransjen. Vi følger disse bransjenormene i vår virksomhet.
-          </p>
-
-          <h2 className="font-serif text-2xl font-bold text-primary-900 mt-10 mb-4">2. Når samler vi inn personopplysninger?</h2>
-          <p className="text-primary-600 mb-4">Vi samler inn personopplysninger i forbindelse med:</p>
-          <ul className="list-disc list-inside space-y-2 text-primary-600 mb-6">
-            <li>Utførelse av våre oppdrag, inkludert revisjonstjenester (revisjon av årsregnskap, forenklet revisorkontroll av regnskaper, andre attestasjonsoppdrag/revisorbekreftelser og avtalte kontrollhandlinger)</li>
-            <li>Kundekontroll og rapportering av mistanke etter hvitvaskingsloven</li>
-            <li>Kundekontakt og markedsføring</li>
-            <li>Ansettelser og ansatte</li>
-          </ul>
-
-          <h2 className="font-serif text-2xl font-bold text-primary-900 mt-10 mb-4">3. Behandlingsansvarlig og databehandler</h2>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Vi er behandlingsansvarlig etter personvernreglene når vi behandler personopplysninger i forbindelse med revisjonstjenester, utarbeidelse av årsregnskap og skattemelding for egne revisjonsklienter og attestasjonstjenester.
-          </p>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            I enkelte tilfeller er vi databehandler for vår kunde. Det vil si at vi behandler dine personopplysninger på vegne av vår oppdragsgiver (behandlingsansvarlig). Dette gjelder for regnskapsføreroppdrag og rådgivningsoppdrag mv.
-          </p>
-
-          <h2 className="font-serif text-2xl font-bold text-primary-900 mt-10 mb-4">4. Dine rettigheter</h2>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Du kan utøve dine rettigheter ved å kontakte vår personvernansvarlig. Send en e-post til rune@gjrevisjon.no. Du skal få svar uten ugrunnet opphold, og senest innen 30 dager.
-          </p>
-
-          <h3 className="font-semibold text-primary-900 mt-6 mb-3">4.1 Innsyn</h3>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Enhver som ber om det har krav på å få vite hva slags behandling av personopplysninger vi foretar, samt grunnleggende informasjon om behandlingen. Vi er underlagt lovbestemt taushetsplikt som gjør at du ikke kan få innsyn i opplysninger vi behandler om deg som også gjelder andre.
-          </p>
-
-          <h3 className="font-semibold text-primary-900 mt-6 mb-3">4.2 Sletting og retting</h3>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Du har rett til å få slettet opplysninger om deg selv som ikke lenger er nødvendige for å følge opp oppdraget forsvarlig og som vi ikke har lovbestemt plikt til å oppbevare.
-          </p>
-
-          <h3 className="font-semibold text-primary-900 mt-6 mb-3">4.3 Klage</h3>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Ta først kontakt med vår personvernansvarlig hvis du mener vi ikke overholder personvernreglene. Du kan også klage over vår behandling av personopplysninger til Datatilsynet.
-          </p>
-
-          <h2 className="font-serif text-2xl font-bold text-primary-900 mt-10 mb-4">5. Personopplysninger vi samler inn</h2>
-          
-          <h3 className="font-semibold text-primary-900 mt-6 mb-3">5.1 Oppdrag etter revisorloven</h3>
-          <p className="text-primary-600 mb-4">Revisjonsdokumentasjonen inneholder personopplysninger som:</p>
-          <ul className="list-disc list-inside space-y-2 text-primary-600 mb-6">
-            <li>Navn og stillingsbetegnelse på personer vi har innhentet opplysninger fra</li>
-            <li>Opplysninger om lønns- og arbeidsforhold til ansatte hos selskapet vi reviderer</li>
-            <li>Vurderinger av kompetansen og integriteten til personer som har ansvar for regnskapet</li>
-          </ul>
-
-          <h3 className="font-semibold text-primary-900 mt-6 mb-3">5.2 Plikter etter hvitvaskingsloven</h3>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Gjennom hvitvaskingsloven er vi pålagt å utføre kundekontroll av alle våre kunder. Vi skal registrere opplysninger om identiteten til den som handler på vegne av kunden og reelle rettighetshavere, inkludert kopi av legitimasjonsdokumenter.
-          </p>
-
-          <h3 className="font-semibold text-primary-900 mt-6 mb-3">5.3 Kundekontakt og markedsføring</h3>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            I vår kontakt med eksisterende, tidligere og potensielle kunder, registrerer vi kontaktopplysninger om kontaktpersoner slik som navn, e-postadresse, telefonnummer og stillingsbenevnelse.
-          </p>
-
-          <h2 className="font-serif text-2xl font-bold text-primary-900 mt-10 mb-4">6. Informasjonssikkerhet og oppbevaring</h2>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Vi har rutiner for å sikre konfidensialitet og integritet i våre kunders data. Sikringsmekanismene inkluderer rolle- og tilgangsstyring og krav til innebygd personvern i våre IT-systemer.
-          </p>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Vi er underlagt taushetsplikt etter revisorloven om alt vi blir kjent med i vår virksomhet. Etter revisorloven skal vi oppbevare dokumentasjonen vår på en ordnet og betryggende måte i minst ti år.
-          </p>
-
-          <h2 className="font-serif text-2xl font-bold text-primary-900 mt-10 mb-4">7. Overføring av personopplysninger</h2>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Vi oppbevarer våre kundedata, inkludert alle personopplysninger, i Norge eller andre EØS-land. Vi benytter kun databehandlere som oppbevarer opplysningene i Norge eller andre EØS-land.
-          </p>
-
-          <h2 className="font-serif text-2xl font-bold text-primary-900 mt-10 mb-4">8. Vår bruk av databehandlere</h2>
-          <p className="text-primary-600 mb-6 leading-relaxed">
-            Vi bruker tjenesteleverandører til å drifte våre informasjonssystemer og lagre data for oss. Vi har databehandleravtaler med alle tjenesteleverandører som behandler personopplysninger på vegne av oss.
+          <p className="text-slate-700 text-xs mt-6">
+            Dato for siste endring: 16. oktober 2018
           </p>
         </div>
+
+        {[
+          {
+            title: '1. Lovgivning og bransjenormer',
+            content: 'Gyllstrøm & Johansen AS har offentlig godkjenning fra Finanstilsynet etter revisorloven. Finanstilsynet fører tilsyn med at vi driver virksomheten vår i samsvar med lovgivningen vi er underlagt.\n\nDet er utarbeidet en bransjenorm for behandling av personopplysninger i revisjonsbransjen. Vi følger disse bransjenormene i vår virksomhet.'
+          },
+          {
+            title: '2. Når samler vi inn personopplysninger?',
+            content: 'Vi samler inn personopplysninger i forbindelse med:\n\n• Utførelse av våre oppdrag, inkludert revisjonstjenester\n• Kundekontroll og rapportering av mistanke etter hvitvaskingsloven\n• Kundekontakt og markedsføring\n• Ansettelser og ansatte'
+          },
+          {
+            title: '3. Behandlingsansvarlig og databehandler',
+            content: 'Vi er behandlingsansvarlig etter personvernreglene når vi behandler personopplysninger i forbindelse med revisjonstjenester, utarbeidelse av årsregnskap og skattemelding for egne revisjonsklienter og attestasjonstjenester.\n\nI enkelte tilfeller er vi databehandler for vår kunde. Det vil si at vi behandler dine personopplysninger på vegne av vår oppdragsgiver (behandlingsansvarlig).'
+          },
+          {
+            title: '4. Dine rettigheter',
+            content: 'Du kan utøve dine rettigheter ved å kontakte vår personvernansvarlig. Send en e-post til rune@gjrevisjon.no. Du skal få svar uten ugrunnet opphold, og senest innen 30 dager.\n\nDu har rett til innsyn, sletting, retting og klage etter personvernreglene.'
+          },
+          {
+            title: '5. Personopplysninger vi samler inn',
+            content: 'Revisjonsdokumentasjonen inneholder personopplysninger som navn og stillingsbetegnelse på personer vi har innhentet opplysninger fra, opplysninger om lønns- og arbeidsforhold til ansatte hos selskapet vi reviderer, og vurderinger av kompetansen og integriteten til personer som har ansvar for regnskapet.\n\nGjennom hvitvaskingsloven er vi pålagt å utføre kundekontroll av alle våre kunder.'
+          },
+          {
+            title: '6. Informasjonssikkerhet og oppbevaring',
+            content: 'Vi har rutiner for å sikre konfidensialitet og integritet i våre kunders data. Sikringsmekanismene inkluderer rolle- og tilgangsstyring og krav til innebygd personvern i våre IT-systemer.\n\nVi er underlagt taushetsplikt etter revisorloven om alt vi blir kjent med i vår virksomhet. Etter revisorloven skal vi oppbevare dokumentasjonen vår på en ordnet og betryggende måte i minst ti år.'
+          },
+          {
+            title: '7. Overføring av personopplysninger',
+            content: 'Vi oppbevarer våre kundedata, inkludert alle personopplysninger, i Norge eller andre EØS-land. Vi benytter kun databehandlere som oppbevarer opplysningene i Norge eller andre EØS-land.'
+          },
+          {
+            title: '8. Vår bruk av databehandlere',
+            content: 'Vi bruker tjenesteleverandører til å drifte våre informasjonssystemer og lagre data for oss. Vi har databehandleravtaler med alle tjenesteleverandører som behandler personopplysninger på vegne av oss.'
+          },
+        ].map((section, i) => (
+          <div key={i} className="mb-10">
+            <h2 className="font-serif text-xl text-slate-200 mb-4">{section.title}</h2>
+            <div className="text-slate-500 text-sm leading-relaxed whitespace-pre-line">
+              {section.content}
+            </div>
+          </div>
+        ))}
       </div>
 
-      <footer className="bg-primary-900 text-white py-8 border-t border-primary-800">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-primary-400 text-sm">
+      <footer className="bg-[#080c14] border-t border-slate-800/50 py-8">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-slate-700 text-xs tracking-wide">
             © {new Date().getFullYear()} Gyllstrøm & Johansen AS
           </p>
-          <Link href="/" className="text-primary-300 hover:text-accent-400 transition-colors text-sm">
+          <Link href="/" className="text-slate-600 hover:text-[#c9a96e] transition-colors text-sm">
             Tilbake til forsiden
           </Link>
         </div>
