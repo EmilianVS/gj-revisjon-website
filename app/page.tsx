@@ -1,77 +1,69 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { Phone, Mail, MapPin, ArrowUpRight } from 'lucide-react'
+import { useEffect, useState } from 'react'
+import { Phone, Mail, MapPin, ArrowUpRight, Menu, X } from 'lucide-react'
 
 export default function Home() {
   const [scrolled, setScrolled] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 100)
+    const onScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const el = entry.target as HTMLElement
-            const animation = el.dataset.animate
-            if (animation) {
-              el.style.animation = `${animation} 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${el.dataset.delay || '0s'} forwards`
-            }
-            observer.unobserve(el)
-          }
-        })
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    )
-
-    document.querySelectorAll('[data-animate]').forEach((el) => observer.observe(el))
-    return () => observer.disconnect()
-  }, [])
-
   const scrollTo = (id: string) => {
+    setMenuOpen(false)
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
   }
+
+  const navLinks = [
+    { label: 'Tjenester', id: 'tjenester' },
+    { label: 'Om', id: 'om-oss' },
+    { label: 'Kontakt', id: 'kontakt' },
+  ]
 
   return (
     <div style={{ background: '#060a14', minHeight: '100vh' }}>
       {/* ============================================
-          FLOATING GRADIENT ORBS
+          FLOATING GRADIENT ORBS — reduced for perf
           ============================================ */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="orb orb-gold animate-float" style={{ width: '600px', height: '600px', top: '-10%', right: '-5%' }} />
-        <div className="orb orb-blue animate-float-delayed" style={{ width: '500px', height: '500px', bottom: '20%', left: '-10%' }} />
-        <div className="orb orb-gold animate-float" style={{ width: '300px', height: '300px', top: '40%', right: '20%', animationDelay: '-8s', animationDuration: '18s' }} />
+        <div
+          className="orb orb-gold animate-float"
+          style={{ width: '400px', height: '400px', top: '-5%', right: '-8%' }}
+        />
+        <div
+          className="orb orb-blue animate-float-delayed"
+          style={{ width: '350px', height: '350px', bottom: '30%', left: '-10%' }}
+        />
       </div>
 
       {/* ============================================
-          NAVIGATION
+          NAVIGATION — no backdrop-filter (GPU heavy)
           ============================================ */}
       <nav
-        className="fixed top-0 left-0 right-0 z-50 transition-all duration-700"
+        className="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
         style={{
-          background: scrolled ? 'rgba(6, 10, 20, 0.85)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(20px)' : 'none',
+          background: scrolled ? 'rgba(6, 10, 20, 0.95)' : 'transparent',
           borderBottom: scrolled ? '1px solid rgba(196, 165, 116, 0.06)' : '1px solid transparent',
         }}
       >
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
-          <div className="flex items-center justify-between" style={{ height: '80px' }}>
-            <button onClick={() => scrollTo('top')} className="group flex items-center gap-4">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-8 lg:px-16">
+          <div className="flex items-center justify-between" style={{ height: '72px' }}>
+            <button onClick={() => scrollTo('top')} className="group flex items-center gap-3">
               <div
                 className="flex items-center justify-center transition-all duration-500 group-hover:border-[#c4a57440]"
                 style={{
-                  width: '40px',
-                  height: '40px',
+                  width: '36px',
+                  height: '36px',
                   borderRadius: '50%',
                   border: '1px solid rgba(196, 165, 116, 0.15)',
+                  flexShrink: 0,
                 }}
               >
-                <span className="font-display text-lg" style={{ color: '#c4a574' }}>GJ</span>
+                <span className="font-display text-base" style={{ color: '#c4a574' }}>GJ</span>
               </div>
               <span
                 className="hidden md:block"
@@ -79,74 +71,110 @@ export default function Home() {
                   fontSize: '0.6875rem',
                   letterSpacing: '0.15em',
                   textTransform: 'uppercase',
-                  color: scrolled ? '#6b7280' : '#6b7280',
-                  transition: 'color 0.4s ease',
+                  color: '#6b7280',
                 }}
               >
                 Gyllstrøm & Johansen
               </span>
             </button>
 
-            <div className="flex items-center gap-12">
-              {[
-                { label: 'Tjenester', id: 'tjenester' },
-                { label: 'Om', id: 'om-oss' },
-                { label: 'Kontakt', id: 'kontakt' },
-              ].map((item) => (
+            {/* Desktop links */}
+            <div className="hidden md:flex items-center gap-10">
+              {navLinks.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => scrollTo(item.id)}
-                  className="link-hover hidden md:block"
+                  className="link-hover"
                   style={{ fontSize: '0.6875rem', letterSpacing: '0.15em', textTransform: 'uppercase' }}
                 >
                   {item.label}
                 </button>
               ))}
-              <button
-                onClick={() => scrollTo('kontakt')}
-                className="btn-elegant"
-              >
+              <button onClick={() => scrollTo('kontakt')} className="btn-elegant">
+                Book samtale
+              </button>
+            </div>
+
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden"
+              onClick={() => setMenuOpen(!menuOpen)}
+              style={{ color: '#e8e4dc' }}
+              aria-label="Menu"
+            >
+              {menuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        {menuOpen && (
+          <div
+            className="md:hidden"
+            style={{
+              background: 'rgba(6, 10, 20, 0.98)',
+              borderTop: '1px solid rgba(196, 165, 116, 0.06)',
+              padding: '1.5rem 1.5rem 2rem',
+            }}
+          >
+            <div className="flex flex-col gap-6">
+              {navLinks.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollTo(item.id)}
+                  style={{
+                    fontSize: '0.875rem',
+                    letterSpacing: '0.15em',
+                    textTransform: 'uppercase',
+                    color: '#9ca3af',
+                    textAlign: 'left',
+                  }}
+                >
+                  {item.label}
+                </button>
+              ))}
+              <button onClick={() => scrollTo('kontakt')} className="btn-elegant w-full">
                 Book samtale
               </button>
             </div>
           </div>
-        </div>
+        )}
       </nav>
 
       {/* ============================================
           HERO
           ============================================ */}
-      <section id="top" className="relative z-10 min-h-[100dvh] flex flex-col justify-end" style={{ paddingBottom: '8vh' }}>
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-16 w-full">
+      <section
+        id="top"
+        className="relative z-10 flex flex-col justify-end"
+        style={{ minHeight: '100dvh', paddingBottom: 'clamp(3rem, 8vh, 6rem)' }}
+      >
+        <div className="max-w-[1400px] mx-auto px-6 md:px-8 lg:px-16 w-full">
           {/* Top label */}
-          <div className="will-animate animate-reveal-opacity delay-200 mb-12 md:mb-16">
-            <div className="flex items-center gap-6">
-              <div className="rule-left" style={{ width: '60px' }} />
+          <div className="mb-8 md:mb-12">
+            <div className="flex items-center gap-4">
+              <div className="rule-left" style={{ width: '40px', flexShrink: 0 }} />
               <span className="label-tiny">Statsautoriserte Revisorer · Drammen</span>
             </div>
           </div>
 
-          {/* Massive headline */}
+          {/* Headline */}
           <h1 className="headline-massive">
-            <span className="block overflow-hidden">
-              <span className="will-animate animate-reveal-up delay-300 block">Gyllstrøm</span>
-            </span>
-            <span className="block overflow-hidden">
-              <span className="will-animate animate-reveal-up delay-400 block">
-                & <em style={{ color: '#c4a574', fontStyle: 'normal' }}>Johansen</em>
-              </span>
+            <span className="block">Gyllstrøm</span>
+            <span className="block">
+              & <em style={{ color: '#c4a574', fontStyle: 'normal' }}>Johansen</em>
             </span>
           </h1>
 
           {/* Bottom row */}
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10 mt-16 md:mt-24">
-            <div className="will-animate animate-reveal-up delay-500 max-w-md">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mt-10 md:mt-16">
+            <div className="max-w-md">
               <p className="body-elegant" style={{ color: '#6b7280' }}>
                 Din partner innen revisjon og økonomisk rådgivning.
                 Personlig. Pålitelig. Profesjonell. Siden 2016.
               </p>
             </div>
-            <div className="will-animate animate-reveal-up delay-600 flex items-center gap-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <button onClick={() => scrollTo('kontakt')} className="btn-elegant">
                 Book uforpliktende samtale
                 <ArrowUpRight size={14} />
@@ -166,22 +194,21 @@ export default function Home() {
       {/* ============================================
           SERVICES — Editorial List
           ============================================ */}
-      <section id="tjenester" className="relative z-10" style={{ padding: '15vh 0' }}>
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+      <section id="tjenester" className="relative z-10 py-24 md:py-32">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-8 lg:px-16">
           {/* Section header */}
-          <div className="flex items-start justify-between mb-20">
+          <div className="flex items-start justify-between mb-12 md:mb-16">
             <div>
-              <div className="flex items-center gap-6 mb-6">
-                <div className="rule-left" style={{ width: '40px' }} />
+              <div className="flex items-center gap-4 mb-4">
+                <div className="rule-left" style={{ width: '40px', flexShrink: 0 }} />
                 <span className="label-tiny">Tjenester</span>
               </div>
-              <h2 className="headline-section will-animate" data-animate="reveal-up">
-                Hva vi<br />gjør
+              <h2 className="headline-section">
+                Hva vi<br className="hidden md:block" /> gjør
               </h2>
             </div>
             <span
-              className="hidden md:block will-animate"
-              data-animate="reveal-opacity"
+              className="hidden md:block"
               style={{ fontSize: '0.625rem', letterSpacing: '0.2em', color: 'rgba(107, 114, 128, 0.3)', marginTop: '2rem' }}
             >
               04 TILBUD
@@ -189,7 +216,7 @@ export default function Home() {
           </div>
 
           {/* Service list */}
-          <div className="mt-16">
+          <div>
             {[
               {
                 num: '01',
@@ -211,29 +238,14 @@ export default function Home() {
                 title: 'Regnskap og bokføring',
                 desc: 'Løpende bokføring, lønnskjøring og årsoppgjør. Slik at du kan fokusere på det du er best på — å drive bedrift.',
               },
-            ].map((service, i) => (
-              <div
-                key={i}
-                className="service-item will-animate"
-                data-animate="reveal-up"
-                data-delay={`${i * 0.1}s`}
-              >
-                <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-4">
-                  <div className="flex items-baseline gap-8 md:gap-16">
+            ].map((service) => (
+              <div key={service.num} className="service-item">
+                <div className="flex flex-col md:flex-row md:items-baseline md:justify-between gap-3 md:gap-4">
+                  <div className="flex items-baseline gap-4 md:gap-10">
                     <span className="service-num">{service.num}</span>
                     <h3 className="service-title">{service.title}</h3>
                   </div>
-                  <p
-                    className="body-elegant max-w-sm md:text-right"
-                    style={{ color: '#6b7280', fontSize: '0.875rem', opacity: 0 }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.opacity = '1'
-                      ;(e.currentTarget as HTMLElement).style.transition = 'opacity 0.6s ease'
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.opacity = '0'
-                    }}
-                  >
+                  <p className="service-desc md:text-right">
                     {service.desc}
                   </p>
                 </div>
@@ -244,19 +256,32 @@ export default function Home() {
       </section>
 
       {/* ============================================
-          PHILOSOPHY — Asymmetric Quote
+          PHILOSOPHY — Quote
           ============================================ */}
-      <section className="relative z-10" style={{ padding: '20vh 0' }}>
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
+      <section className="relative z-10 py-24 md:py-32">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-8 lg:px-16">
           <div className="grid md:grid-cols-12 gap-8 md:gap-16 items-start">
             {/* Left label */}
             <div className="md:col-span-2">
               <div className="flex items-center gap-4 md:flex-col md:items-start md:gap-6">
-                <div className="rule-left md:w-full" />
+                <div className="rule-left md:w-full" style={{ flexShrink: 0 }} />
                 <span
-                  className="label-tiny will-animate"
-                  data-animate="reveal-opacity"
-                  style={{ writingMode: 'vertical-lr', textOrientation: 'mixed' }}
+                  className="label-tiny"
+                  style={{
+                    writingMode: 'vertical-lr',
+                    textOrientation: 'mixed',
+                    display: 'none',
+                  }}
+                >
+                  Filosofi
+                </span>
+                <span className="label-tiny md:hidden">Filosofi</span>
+                <span
+                  className="label-tiny hidden md:block"
+                  style={{
+                    writingMode: 'vertical-lr',
+                    textOrientation: 'mixed',
+                  }}
                 >
                   Filosofi
                 </span>
@@ -265,13 +290,13 @@ export default function Home() {
 
             {/* Center content */}
             <div className="md:col-span-7">
-              <blockquote className="will-animate" data-animate="reveal-up">
+              <blockquote>
                 <p
                   className="font-display"
                   style={{
-                    fontSize: 'clamp(1.75rem, 4vw, 3.5rem)',
+                    fontSize: 'clamp(1.5rem, 3.5vw, 2.75rem)',
                     fontWeight: 300,
-                    lineHeight: 1.15,
+                    lineHeight: 1.25,
                     color: '#e8e4dc',
                     letterSpacing: '-0.01em',
                   }}
@@ -283,61 +308,57 @@ export default function Home() {
             </div>
 
             {/* Right attribution */}
-            <div className="md:col-span-3 md:pt-24">
-              <div className="will-animate" data-animate="reveal-opacity" data-delay="0.3s">
-                <div className="rule-left mb-6" />
-                <p style={{ fontSize: '0.875rem', color: '#e8e4dc', marginBottom: '0.5rem' }}>
-                  Hege Gyllstrøm & Rune Johansen
-                </p>
-                <p style={{ fontSize: '0.625rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6b7280' }}>
-                  Partnere
-                </p>
-              </div>
+            <div className="md:col-span-3 md:pt-16">
+              <div className="rule-left mb-4" />
+              <p style={{ fontSize: '0.875rem', color: '#e8e4dc', marginBottom: '0.25rem' }}>
+                Hege Gyllstrøm & Rune Johansen
+              </p>
+              <p style={{ fontSize: '0.625rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6b7280' }}>
+                Partnere
+              </p>
             </div>
           </div>
         </div>
       </section>
 
       {/* ============================================
-          ABOUT — Editorial Magazine Layout
+          ABOUT — Editorial Layout
           ============================================ */}
-      <section id="om-oss" className="relative z-10" style={{ padding: '15vh 0' }}>
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
-          <div className="grid md:grid-cols-12 gap-8 md:gap-16">
+      <section id="om-oss" className="relative z-10 py-24 md:py-32">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-8 lg:px-16">
+          <div className="grid md:grid-cols-12 gap-12 md:gap-16">
             {/* Left: Big headline */}
             <div className="md:col-span-5">
-              <div className="flex items-center gap-6 mb-8">
-                <div className="rule-left" style={{ width: '40px' }} />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="rule-left" style={{ width: '40px', flexShrink: 0 }} />
                 <span className="label-tiny">Om oss</span>
               </div>
-              <h2 className="headline-section will-animate" data-animate="reveal-up">
+              <h2 className="headline-section">
                 Vi bryr oss — <em style={{ fontStyle: 'italic', color: '#c4a574' }}>derfor er vi</em>
               </h2>
             </div>
 
-            {/* Right: Body text with offset */}
-            <div className="md:col-span-5 md:col-start-8 md:pt-32">
-              <div className="will-animate" data-animate="reveal-up" data-delay="0.2s">
-                <p className="body-elegant" style={{ color: '#9ca3af', marginBottom: '2rem' }}>
-                  <strong style={{ color: '#e8e4dc', fontWeight: 400 }}>Gyllstrøm & Johansen AS</strong> startet opp 1. januar 2016 med Hege Gyllstrøm og Rune Johansen som partnere.
-                </p>
-                <p className="body-elegant" style={{ color: '#6b7280', marginBottom: '2rem' }}>
-                  Som en naturlig del av det å være revisorer er vi også økonomiske rådgivere — uten at det går på bekostning av revisors uavhengighet.
-                </p>
-                <p className="body-elegant" style={{ color: '#6b7280', marginBottom: '3rem' }}>
-                  Vår strategi er å tilby våre klienter personlig kontakt, være joviale, løsningsorienterte, men samtidig utføre vår profesjon med høy grad av integritet.
-                </p>
+            {/* Right: Body text */}
+            <div className="md:col-span-5 md:col-start-8 md:pt-24">
+              <p className="body-elegant" style={{ color: '#9ca3af', marginBottom: '1.5rem' }}>
+                <strong style={{ color: '#e8e4dc', fontWeight: 400 }}>Gyllstrøm & Johansen AS</strong> startet opp 1. januar 2016 med Hege Gyllstrøm og Rune Johansen som partnere.
+              </p>
+              <p className="body-elegant" style={{ color: '#6b7280', marginBottom: '1.5rem' }}>
+                Som en naturlig del av det å være revisorer er vi også økonomiske rådgivere — uten at det går på bekostning av revisors uavhengighet.
+              </p>
+              <p className="body-elegant" style={{ color: '#6b7280', marginBottom: '2.5rem' }}>
+                Vår strategi er å tilby våre klienter personlig kontakt, være joviale, løsningsorienterte, men samtidig utføre vår profesjon med høy grad av integritet.
+              </p>
 
-                {/* Stats row */}
-                <div className="flex gap-16 pt-8" style={{ borderTop: '1px solid rgba(196, 165, 116, 0.08)' }}>
-                  <div>
-                    <span className="font-display" style={{ fontSize: '2.5rem', fontWeight: 300, color: '#e8e4dc' }}>40+</span>
-                    <p style={{ fontSize: '0.625rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6b7280', marginTop: '0.5rem' }}>Års erfaring</p>
-                  </div>
-                  <div>
-                    <span className="font-display" style={{ fontSize: '2.5rem', fontWeight: 300, color: '#e8e4dc' }}>2016</span>
-                    <p style={{ fontSize: '0.625rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6b7280', marginTop: '0.5rem' }}>Etablert</p>
-                  </div>
+              {/* Stats row */}
+              <div className="flex gap-12 pt-6" style={{ borderTop: '1px solid rgba(196, 165, 116, 0.08)' }}>
+                <div>
+                  <span className="font-display" style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)', fontWeight: 300, color: '#e8e4dc' }}>40+</span>
+                  <p style={{ fontSize: '0.625rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6b7280', marginTop: '0.5rem' }}>Års erfaring</p>
+                </div>
+                <div>
+                  <span className="font-display" style={{ fontSize: 'clamp(2rem, 4vw, 2.5rem)', fontWeight: 300, color: '#e8e4dc' }}>2016</span>
+                  <p style={{ fontSize: '0.625rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#6b7280', marginTop: '0.5rem' }}>Etablert</p>
                 </div>
               </div>
             </div>
@@ -346,12 +367,12 @@ export default function Home() {
       </section>
 
       {/* ============================================
-          TEAM — Minimal List
+          TEAM — Cards
           ============================================ */}
-      <section className="relative z-10" style={{ padding: '15vh 0', background: 'rgba(12, 18, 32, 0.4)' }}>
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
-          <div className="flex items-center gap-6 mb-16">
-            <div className="rule-left" style={{ width: '40px' }} />
+      <section className="relative z-10 py-24 md:py-32" style={{ background: 'rgba(12, 18, 32, 0.4)' }}>
+        <div className="max-w-[1400px] mx-auto px-6 md:px-8 lg:px-16">
+          <div className="flex items-center gap-4 mb-12 md:mb-16">
+            <div className="rule-left" style={{ width: '40px', flexShrink: 0 }} />
             <span className="label-tiny">Partnerne</span>
           </div>
 
@@ -374,10 +395,12 @@ export default function Home() {
             ].map((person, i) => (
               <div
                 key={i}
-                className="will-animate group"
-                data-animate="reveal-up"
-                data-delay={`${i * 0.15}s`}
-                style={{ background: '#060a14', padding: '4rem', transition: 'background 0.6s ease' }}
+                className="group"
+                style={{
+                  background: '#060a14',
+                  padding: 'clamp(1.75rem, 4vw, 3rem)',
+                  transition: 'background 0.5s ease',
+                }}
                 onMouseEnter={(e) => {
                   (e.currentTarget as HTMLElement).style.background = '#0c1220'
                 }}
@@ -385,39 +408,40 @@ export default function Home() {
                   (e.currentTarget as HTMLElement).style.background = '#060a14'
                 }}
               >
-                <div className="flex items-start justify-between mb-12">
+                <div className="flex items-start justify-between mb-8 md:mb-10">
                   <div
                     style={{
-                      width: '72px',
-                      height: '72px',
+                      width: '56px',
+                      height: '56px',
                       borderRadius: '50%',
                       border: '1px solid rgba(196, 165, 116, 0.15)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       transition: 'border-color 0.4s ease',
+                      flexShrink: 0,
                     }}
                     className="group-hover:!border-[#c4a57440]"
                   >
-                    <span className="font-display text-2xl" style={{ color: '#c4a574' }}>{person.initials}</span>
+                    <span className="font-display text-xl" style={{ color: '#c4a574' }}>{person.initials}</span>
                   </div>
                   <span style={{ fontSize: '0.625rem', letterSpacing: '0.2em', color: 'rgba(107, 114, 128, 0.3)' }}>0{i + 1}</span>
                 </div>
 
                 <h3
                   className="font-display"
-                  style={{ fontSize: '1.75rem', fontWeight: 400, color: '#e8e4dc', marginBottom: '0.5rem' }}
+                  style={{ fontSize: 'clamp(1.35rem, 2.5vw, 1.75rem)', fontWeight: 400, color: '#e8e4dc', marginBottom: '0.5rem' }}
                 >
                   {person.name}
                 </h3>
-                <p style={{ fontSize: '0.625rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#c4a574', marginBottom: '2rem' }}>
+                <p style={{ fontSize: '0.625rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#c4a574', marginBottom: '1.5rem' }}>
                   {person.role}
                 </p>
-                <p className="body-elegant" style={{ color: '#6b7280', fontSize: '0.875rem', marginBottom: '2rem' }}>
+                <p className="body-elegant" style={{ color: '#6b7280', fontSize: '0.875rem', marginBottom: '1.5rem' }}>
                   {person.bio}
                 </p>
                 <div className="flex items-center gap-3" style={{ color: '#6b7280', fontSize: '0.875rem' }}>
-                  <Phone size={14} style={{ color: '#c4a574' }} />
+                  <Phone size={14} style={{ color: '#c4a574', flexShrink: 0 }} />
                   <span>{person.phone}</span>
                 </div>
               </div>
@@ -427,29 +451,25 @@ export default function Home() {
       </section>
 
       {/* ============================================
-          CTA — Minimal & Powerful
+          CTA
           ============================================ */}
-      <section className="relative z-10" style={{ padding: '20vh 0' }}>
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="orb orb-gold animate-float" style={{ width: '500px', height: '500px', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }} />
-        </div>
-
-        <div className="relative z-10 max-w-[1400px] mx-auto px-8 lg:px-16 text-center">
-          <div className="flex items-center justify-center gap-6 mb-10">
-            <div className="rule" style={{ width: '60px' }} />
+      <section className="relative z-10 py-24 md:py-32">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-8 lg:px-16 text-center">
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <div className="rule" style={{ width: '40px', flexShrink: 0 }} />
             <span className="label-tiny">Kontakt</span>
-            <div className="rule" style={{ width: '60px' }} />
+            <div className="rule" style={{ width: '40px', flexShrink: 0 }} />
           </div>
 
-          <h2 className="headline-section will-animate" data-animate="reveal-up" style={{ marginBottom: '2rem' }}>
+          <h2 className="headline-section" style={{ marginBottom: '1.5rem' }}>
             La oss prate
           </h2>
 
-          <p className="body-elegant will-animate" data-animate="reveal-opacity" data-delay="0.2s" style={{ color: '#6b7280', maxWidth: '400px', margin: '0 auto 3rem' }}>
+          <p className="body-elegant" style={{ color: '#6b7280', maxWidth: '400px', margin: '0 auto 2rem' }}>
             Uforpliktende samtale om hvordan vi kan hjelpe din bedrift å vokse trygt.
           </p>
 
-          <div className="will-animate flex flex-col sm:flex-row items-center justify-center gap-4" data-animate="reveal-up" data-delay="0.3s">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <a href="tel:+4791542409" className="btn-elegant">
               <Phone size={14} />
               Ring Rune
@@ -465,20 +485,20 @@ export default function Home() {
       {/* ============================================
           CONTACT FORM
           ============================================ */}
-      <section id="kontakt" className="relative z-10" style={{ padding: '15vh 0', background: 'rgba(12, 18, 32, 0.4)' }}>
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
-          <div className="grid md:grid-cols-12 gap-16 md:gap-24">
+      <section id="kontakt" className="relative z-10 py-24 md:py-32" style={{ background: 'rgba(12, 18, 32, 0.4)' }}>
+        <div className="max-w-[1400px] mx-auto px-6 md:px-8 lg:px-16">
+          <div className="grid md:grid-cols-12 gap-12 md:gap-20">
             {/* Left: Info */}
             <div className="md:col-span-4">
-              <div className="flex items-center gap-6 mb-8">
-                <div className="rule-left" style={{ width: '40px' }} />
+              <div className="flex items-center gap-4 mb-6">
+                <div className="rule-left" style={{ width: '40px', flexShrink: 0 }} />
                 <span className="label-tiny">Kontakt</span>
               </div>
-              <h2 className="headline-sub will-animate" data-animate="reveal-up" style={{ marginBottom: '3rem' }}>
+              <h2 className="headline-sub" style={{ marginBottom: '2.5rem' }}>
                 Send oss en melding
               </h2>
 
-              <div className="space-y-8 will-animate" data-animate="reveal-up" data-delay="0.2s">
+              <div className="space-y-8">
                 {[
                   { label: 'Besøksadresse', value: 'Muusøya 1\n3023 Drammen', icon: MapPin },
                   { label: 'Telefon', value: '(+47) 915 42 409\n(+47) 908 21 756', icon: Phone },
@@ -501,7 +521,7 @@ export default function Home() {
 
             {/* Right: Form */}
             <div className="md:col-span-6 md:col-start-7">
-              <form action="https://formspree.io/f/xnqevwpy" method="POST" className="space-y-8 will-animate" data-animate="reveal-up" data-delay="0.3s">
+              <form action="https://formspree.io/f/xnqevwpy" method="POST" className="space-y-8">
                 {[
                   { id: 'name', label: 'Navn', placeholder: 'Ditt navn' },
                   { id: 'email', label: 'E-post', placeholder: 'din@epost.no' },
@@ -535,12 +555,12 @@ export default function Home() {
                     id="message"
                     name="message"
                     required
-                    rows={3}
+                    rows={4}
                     className="input-elegant"
                     placeholder="Fortell oss om din bedrift..."
                   />
                 </div>
-                <button type="submit" className="btn-elegant" style={{ marginTop: '2rem' }}>
+                <button type="submit" className="btn-elegant" style={{ marginTop: '1.5rem' }}>
                   Send melding
                   <ArrowUpRight size={14} />
                 </button>
@@ -554,11 +574,11 @@ export default function Home() {
       </section>
 
       {/* ============================================
-          FOOTER — Ultra Minimal
+          FOOTER
           ============================================ */}
-      <footer className="relative z-10" style={{ padding: '4rem 0', borderTop: '1px solid rgba(196, 165, 116, 0.06)' }}>
-        <div className="max-w-[1400px] mx-auto px-8 lg:px-16">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
+      <footer className="relative z-10" style={{ padding: '3rem 0', borderTop: '1px solid rgba(196, 165, 116, 0.06)' }}>
+        <div className="max-w-[1400px] mx-auto px-6 md:px-8 lg:px-16">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div className="flex items-center gap-4">
               <div
                 style={{
@@ -569,6 +589,7 @@ export default function Home() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  flexShrink: 0,
                 }}
               >
                 <span className="font-display text-sm" style={{ color: '#c4a574' }}>GJ</span>
@@ -579,7 +600,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="flex items-center gap-10">
+            <div className="flex flex-wrap items-center gap-6 md:gap-10">
               {['Tjenester', 'Om oss', 'Kontakt'].map((item) => (
                 <button
                   key={item}
